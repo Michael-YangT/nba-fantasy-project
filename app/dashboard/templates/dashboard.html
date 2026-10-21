@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Fantasy Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #111827; color: white; margin: 0; padding: 20px; }
+        h1 { margin-bottom: 20px; }
+        .card { background: #1f2937; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #374151; padding: 10px; text-align: left; }
+        th { background: #0f172a; }
+    </style>
+</head>
+<body>
+    <h1>NBA Fantasy Dashboard</h1>
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Position</th>
+                    <th>Final Score</th>
+                    <th>Verdict</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in players %}
+                <tr>
+                    <td>{{ p.player_name }}</td>
+                    <td>{{ p.position }}</td>
+                    <td>{{ p.final_score }}</td>
+                    <td>{{ p.injury_verdict }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

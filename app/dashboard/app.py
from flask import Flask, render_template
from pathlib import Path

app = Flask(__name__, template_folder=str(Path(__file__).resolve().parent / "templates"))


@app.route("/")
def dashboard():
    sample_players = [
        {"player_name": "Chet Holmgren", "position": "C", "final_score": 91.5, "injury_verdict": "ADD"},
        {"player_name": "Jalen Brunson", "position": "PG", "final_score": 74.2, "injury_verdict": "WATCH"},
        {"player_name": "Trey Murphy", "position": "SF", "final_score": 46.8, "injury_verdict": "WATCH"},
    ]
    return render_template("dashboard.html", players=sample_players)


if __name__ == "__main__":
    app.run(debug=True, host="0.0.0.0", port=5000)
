@@ -1,0 +1,62 @@
+from __future__ import annotations
+
+from typing import Any, Dict, List
+
+
+def positional_value_adjustment(player: Dict[str, Any]) -> float:
+    pos = str(player.get("position", "")).upper()
+    base = 1.0
+    if pos in {"PG", "SG", "SF"}:
+        base += 0.10
+    if pos in {"PF", "C"}:
+        base += 0.12
+    if pos == "UTIL":
+        base += 0.08
+    return round(base, 3)
+
+
+def upside_multiplier(player: Dict[str, Any]) -> float:
+    upside = player.get("upside_score", 0.0)
+    role_takeover = player.get("role_takeover", 0.0)
+    usage_increase = player.get("usage_increase", 0.0)
+    return round(1.0 + (upside * 0.03) + (role_takeover * 0.7) + (usage_increase * 0.02), 3)
+
+
+def schedule_strength(team_context: Dict[str, Any]) -> float:
+    opp_def_rating = team_context.get("opp_def_rating", 110.0)
+    pace = team_context.get("pace", 100.0)
+    home = 1 if team_context.get("home", 0) else 0
+    value = 1.0
+    if opp_def_rating >= 115:
+        value -= 0.08
+    elif opp_def_rating <= 108:
+        value += 0.12
+    if pace >= 102:
+        value += 0.06
+    if home == 1:
+        value += 0.05
+    return round(value, 3)
+
+
+def trade_candidate_score(player: Dict[str, Any], roster_state: Dict[str, Any]) -> float:
+    projected_score = player.get("projected_score", 0.0)
+    role_takeover = player.get("role_takeover", 0.0)
+    roster_need = player.get("roster_need", 0)
+    future_window = player.get("future_window", 0)
+    return round((projected_score * 0.5) + (role_takeover * 15) + (roster_need * 5) + (future_window * 2), 2)
+
+
+def seasonal_priority(player: Dict[str, Any], roster_state: Dict[str, Any], schedule_context: Dict[str, Any]) -> Dict[str, Any]:
+    pos_adj = positional_value_adjustment(player)
+    upside = upside_multiplier(player)
+    sched = schedule_strength(schedule_context)
+    trade_val = trade_candidate_score(player, roster_state)
+
+    total = ((pos_adj * 20) + (upside * 15) + (sched * 10) + trade_val) / 5
+    return {
+        "position_value": pos_adj,
+        "upside": upside,
+        "schedule_strength": sched,
+        "trade_value": trade_val,
+        "seasonal_priority": round(total, 2),
+    }
