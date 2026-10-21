@@ -1,0 +1,7 @@
+player_id,player_name,team,game_date,minutes,starter_flag,position,role
+1001,Stephen Curry,GSW,2024-01-10,34,1,PG,creator
+1002,Jalen Brunson,NYK,2024-01-10,36,1,PG,creator
+1003,Victor Wembanyama,SAS,2024-01-10,35,1,C,all-around
+1004,Domantas Sabonis,SAC,2024-01-10,37,1,C,playmaker
+1005,Anthony Edwards,MIN,2024-01-10,34,1,SG,scorer
+1007,Giannis Antetokounmpo,MIL,2024-01-10,38,1,PF,scorer

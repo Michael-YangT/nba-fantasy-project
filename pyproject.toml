@@ -1,0 +1,9 @@
+[project]
+name = "nba-fantasy-project"
+version = "0.1.0"
+description = "Fantasy NBA recommendation engine for deep H2H points leagues"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["app/tests"]
